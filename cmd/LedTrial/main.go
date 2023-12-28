@@ -69,8 +69,13 @@ func main() {
 		case <-exit:
 			return
 		default:
+			buf := make([]byte, 0, 4*15)
+			for i := 0; i < 15; i++ {
+				buf = append(buf, selectOptions[option]...)
+			}
+			fmt.Printf("buf is %+v\n", buf)
 			option = (option + 1) % 4
-			_, err := device.Write(selectOptions[option])
+			_, err := device.Write(buf)
 			if err != nil {
 				return
 			}

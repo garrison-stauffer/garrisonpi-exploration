@@ -55,52 +55,22 @@ func main() {
 
 	}()
 
-	selectOptions := [][]byte{
-		[]byte{255, 255, 255, 128},
-		[]byte{0, 0, 255, 128},
-		[]byte{255, 0, 0, 128},
-		[]byte{0, 255, 0, 128},
-	}
-
-	var option = 0
+	//selectOptions := [][]byte{
+	//	[]byte{255, 255, 255, 128},
+	//	[]byte{0, 0, 255, 128},
+	//	[]byte{255, 0, 0, 128},
+	//	[]byte{0, 255, 0, 128},
+	//}
+	//
+	//var option = 0
 
 	_, err = device.Write([]byte{255, 0, 0})
 	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 255, 0, 0})
+	_, err = device.Write([]byte{0, 255, 0})
 	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 255, 0, 0})
-	time.Sleep(3 * time.Second)
-	device.Halt()
-	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0})
-	time.Sleep(3 * time.Second)
-	device.Halt()
-	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0})
-	device.Halt()
-	time.Sleep(3 * time.Second)
-
-	for {
-		select {
-		case <-exit:
-			return
-		default:
-			buf := make([]byte, 0, 4*15)
-			for i := 0; i < 15; i++ {
-				buf = append(buf, selectOptions[option]...)
-			}
-			fmt.Printf("buf is %+v\n", buf)
-			option = (option + 1) % 4
-			_, err := device.Write(buf)
-			if err != nil {
-				fmt.Printf("hmmm, error writing buffer %v\n", err)
-				return
-			}
-			time.Sleep(time.Second)
-		}
-	}
+	_, err = device.Write([]byte{0, 0, 255})
 }

@@ -7,11 +7,17 @@ import (
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	"periph.io/x/devices/v3/nrzled"
+	"periph.io/x/host/v3"
 )
 
 func main() {
 	//spi.
-	var pin spi.PortCloser
+	_, err := host.Init()
+	if err != nil {
+		fmt.Printf("error initializing host: %v\n", err)
+		os.Exit(1)
+		return
+	}
 	pin, err := spireg.Open("12")
 	if err != nil {
 		fmt.Printf("error opening spi port 12: %v\n", err)
@@ -39,8 +45,7 @@ func main() {
 	defer device.Halt()
 
 	for {
-		device.Write()
-		write, err := device.Write([]byte{255, 255, 255, 255})
+		_, err := device.Write([]byte{255, 255, 255, 255})
 		if err != nil {
 			return
 		}

@@ -39,7 +39,7 @@ func main() {
 
 	device, err := nrzled.NewSPI(pin, &nrzled.Opts{
 		NumPixels: 15,
-		Channels:  4,
+		Channels:  3,
 		Freq:      2500 * physic.KiloHertz,
 	})
 	if err != nil {
@@ -64,23 +64,23 @@ func main() {
 
 	var option = 0
 
-	_, err = device.Write([]byte{255, 0, 0, 128})
+	_, err = device.Write([]byte{255, 0, 0})
 	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 255, 0, 0, 128})
+	_, err = device.Write([]byte{0, 0, 0, 255, 0, 0})
 	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 128})
+	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 255, 0, 0})
 	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 128})
+	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0})
 	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 128})
+	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0})
 	device.Halt()
 	time.Sleep(3 * time.Second)
 

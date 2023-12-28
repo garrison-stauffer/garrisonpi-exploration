@@ -38,7 +38,7 @@ func main() {
 
 	device, err := nrzled.NewSPI(pin, &nrzled.Opts{
 		NumPixels: 15,
-		Channels:  3,
+		Channels:  4,
 		Freq:      2500 * physic.KiloHertz,
 	})
 	if err != nil {
@@ -60,7 +60,7 @@ func main() {
 	//
 	//var option = 0
 
-	_, err = device.Write([]byte{255, 0, 0})
+	_, err = device.Write([]byte{255, 0, 0, 0})
 	//device.Halt()
 	//time.Sleep(3 * time.Second)
 	//_, err = device.Write([]byte{0, 255, 0})
@@ -69,6 +69,14 @@ func main() {
 	//_, err = device.Write([]byte{0, 0, 255})
 	//time.Sleep(3 * time.Second)
 
+	fmt.Println("awaiting exit?")
 	<-exit
+	fmt.Println("Exiting now, writing 0 to everything?")
+	var output = make([]byte, 4*5)
+	for i := 0; i < 5; i++ {
+		output = append(output, 0, 0, 0, 0)
+	}
+	device.Write(output)
+
 	return
 }

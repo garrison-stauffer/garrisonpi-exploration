@@ -12,13 +12,15 @@ import (
 
 func main() {
 	//spi.
-	_, err := host.Init()
+	foo, err := host.Init()
+	fmt.Printf("registered host: %+v\n", foo)
 	if err != nil {
 		fmt.Printf("error initializing host: %v\n", err)
 		os.Exit(1)
 		return
 	}
-	pin, err := spireg.Open("12")
+	pin, err := spireg.Open("")
+	fmt.Printf("pin loaded: %+v\n", pin)
 	if err != nil {
 		fmt.Printf("error opening spi port 12: %v\n", err)
 		os.Exit(1)
@@ -35,7 +37,7 @@ func main() {
 	device, err := nrzled.NewSPI(pin, &nrzled.Opts{
 		NumPixels: 15,
 		Channels:  4,
-		Freq:      1100 * physic.Hertz,
+		Freq:      2500 * physic.KiloHertz,
 	})
 	if err != nil {
 		fmt.Printf("error opening nrzled device: %v\n", err)

@@ -65,12 +65,11 @@ func main() {
 	//var option = 0
 
 	_, err = device.Write([]byte{255, 0, 0})
-	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
 	_, err = device.Write([]byte{0, 255, 0})
-	time.Sleep(3 * time.Second)
 	device.Halt()
 	time.Sleep(3 * time.Second)
 	_, err = device.Write([]byte{0, 0, 255})
+	time.Sleep(3 * time.Second)
 }

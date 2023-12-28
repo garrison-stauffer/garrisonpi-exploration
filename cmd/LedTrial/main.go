@@ -64,6 +64,17 @@ func main() {
 
 	var option = 0
 
+	_, err = device.Write([]byte{255, 0, 0, 128})
+	time.Sleep(3 * time.Second)
+	_, err = device.Write([]byte{0, 0, 0, 0, 255, 0, 0, 128})
+	time.Sleep(3 * time.Second)
+	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 128})
+	time.Sleep(3 * time.Second)
+	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 128})
+	time.Sleep(3 * time.Second)
+	_, err = device.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 128})
+	time.Sleep(30 * time.Second)
+
 	for {
 		select {
 		case <-exit:
@@ -77,6 +88,7 @@ func main() {
 			option = (option + 1) % 4
 			_, err := device.Write(buf)
 			if err != nil {
+				fmt.Printf("hmmm, error writing buffer %v\n", err)
 				return
 			}
 			time.Sleep(time.Second)

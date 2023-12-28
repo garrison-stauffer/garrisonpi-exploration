@@ -10,7 +10,6 @@ import (
 	"periph.io/x/devices/v3/nrzled"
 	"periph.io/x/host/v3"
 	"syscall"
-	"time"
 )
 
 func main() {
@@ -51,9 +50,6 @@ func main() {
 
 	exit := make(chan os.Signal, 1) // we need to reserve to buffer size 1, so the notifier are not blocked
 	signal.Notify(exit, os.Interrupt, syscall.SIGTERM)
-	go func() {
-
-	}()
 
 	//selectOptions := [][]byte{
 	//	[]byte{255, 255, 255, 128},
@@ -65,11 +61,14 @@ func main() {
 	//var option = 0
 
 	_, err = device.Write([]byte{255, 0, 0})
-	device.Halt()
-	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 255, 0})
-	device.Halt()
-	time.Sleep(3 * time.Second)
-	_, err = device.Write([]byte{0, 0, 255})
-	time.Sleep(3 * time.Second)
+	//device.Halt()
+	//time.Sleep(3 * time.Second)
+	//_, err = device.Write([]byte{0, 255, 0})
+	//device.Halt()
+	//time.Sleep(3 * time.Second)
+	//_, err = device.Write([]byte{0, 0, 255})
+	//time.Sleep(3 * time.Second)
+
+	<-exit
+	return
 }
